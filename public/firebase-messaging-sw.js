@@ -10,19 +10,19 @@ firebase.initializeApp({
   'messagingSenderId': '1017603592509'
 });
 
-// Retrieve an instance of Firebase Messaging so that it can handle background messages.
 const messaging = firebase.messaging();
 
+messaging.getInstance().subscribeToTopic("poc-push");
+
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.log('Push message received background', payload);
+  console.log('Recebeu mensagem em backgroun.', payload);
   var obj = JSON.parse(payload.data.notification);
   var notificationTitle = obj.title;
-  var tag = 'simple-push-demo-notification-tag';
   var notificationOptions = {
-    body: obj.body,
-    icon: obj.icon
+    body: 'teste',
+    icon: 'teste'
   };
-  return self.ServiceWorkerRegistration.showNotification(notificationTitle,
+  return self.registration.showNotification(notificationTitle,
     notificationOptions);
 });
 // [END initialize_firebase_in_sw]
